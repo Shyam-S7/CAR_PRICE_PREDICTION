@@ -1,0 +1,139 @@
+import sys
+import os 
+import pandas as pd
+import numpy as np
+from src.logger import logging
+from src.exception import CustomException
+from src.utils
+from dataclasses import dataclass
+from sklearn.preprocessing import LabelEncoder,OneHotEncoder,StandardScaler
+from sklearn.impute import SimpleImputer
+
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+
+
+@dataclass
+class DataTransformationconfig:
+    preprocessing_obj_file_path=os.path.join('artifacts','preprocessing.pkl')
+
+class DataTransformation:
+    def __init__(self):
+        self.data_transformation_config=DataTransformationconfig()
+    
+    #preprocessing object
+    def get_data_transformation_obj(self):
+        try:
+            logging.info("Data Transformation initiated")
+            
+            categorical_cols=
+
+            numerical_cols=
+
+
+            logging.info("Pipeline initiated")
+
+
+            numerical_pipeline=Pipeline(
+
+                steps=[
+                    ('imputer',SimpleImputer(strategy='median')),
+                    ('scaler',StandardScaler())
+                    ]
+            )
+
+
+
+            categorical_pipeline=Pipeline(steps=[
+                ('imputer',SimpleImputer(strategy='most_frequent')),
+                ('OneHotEncoder',OneHotEncoder(categories=[]))
+                ('LabelEncoder',LabelEncoder(categories=[]))
+            ])
+
+
+
+            preprocessor=ColumnTransformer([
+                ('numerical_pipeline',numerical_pipeline,numerical_cols)
+                ('categorical_pipeline',categorical_pipeline,categorical_cols)
+
+
+
+            ])
+
+
+
+            return preprocessor
+        
+            logging.info('Pipeline Completed')
+
+
+        except Exception as e:
+                logging.info("Error in Data Trnasformation")
+                raise CustomException(e,sys)
+
+
+#Apply preprocessing
+def initaite_data_transformation(self,train_path,test_path):
+    try:
+     train_df=pd.read_csv(train_path)
+     test_df=pd.read_csv(test_path)
+
+
+ 
+    logging.info('Read train and test data completed')
+    logging.info(f'Train Dataframe Head : \n{train_df.head().to_string()}')
+    logging.info(f'Test Dataframe Head  : \n{test_df.head().to_string()}')
+
+    logging.info('Obtaining preprocessing object')
+     
+
+    preprocessing_obj=self.get_data_transformation_obj()
+
+
+     target_column_name = 'price'       #y
+    drop_columns = [target_column_name,'id']   #x
+            
+            #TRAIN
+            input_feature_train_df = train_df.drop(columns=drop_columns,axis=1)#xtrain
+            target_feature_train_df=train_df[target_column_name]#ytrain
+            
+
+            #TEST
+            input_feature_test_df=test_df.drop(columns=drop_columns,axis=1)#xtest
+            target_feature_test_df=test_df[target_column_name]#ytest
+            
+
+
+             #X DATA
+            input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)#Xtrain
+            input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)#Xtest
+
+            logging.info("Applying preprocessing object on training and testing datasets.")
+            
+
+            train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]    
+            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]       
+
+
+
+
+
+
+           save_object(
+
+                file_path=self.data_transformation_config.preprocessor_obj_file_path,
+                obj=preprocessing_obj
+
+            )
+            logging.info('Preprocessor pickle file saved')
+
+            return (
+                train_arr,
+                test_arr,
+                self.data_transformation_config.preprocessor_obj_file_path,
+            )
+            
+        except Exception as e:
+            logging.info("Exception occured in the initiate_datatransformation")
+
+            raise CustomException(e,sys)

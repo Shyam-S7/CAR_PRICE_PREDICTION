@@ -33,16 +33,12 @@ class DataTransformation:
         try:
             logging.info("Data Transformation initiated")
 
-            categorical_features = [
-                "fuel_type",
-                "brand",
-                "model",
-                "color",
-                "transmission_type",
-            ]
+            categorical_features_lb = ["fuel_type", "brand", "model", "color"]
+            categorical_features_one = ["transmission_type"]
             numeric_features = [
                 "mileage_in_km",
                 "power_kw",
+                "power_ps",
                 "fuel_consumption_l_100km",
                 "fuel_consumption_g_km",
             ]
@@ -54,25 +50,35 @@ class DataTransformation:
                 ]
             )
 
-            cat_pipeline = Pipeline(
+            cat_lb_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="most_frequent")),
                     (
                         "ordinalencoder",
                         OrdinalEncoder(
-                            categories=("fuel_type", "brand", "model", "color")
+                            handle_unknown="use_encoded_value", unknown_value=-1
                         ),
                     ),
                     ("scaler", StandardScaler()),
-                    ("onehot", OneHotEncoder(categories="transmission_type")),
+                ]
+            )
+            cat_one_pipeline = Pipeline(
+                [
+                    ("imputer", SimpleImputer(strategy="most_frequent")),
+                    (
+                        "onehot",
+                        OneHotEncoder(handle_unknown="ignore", drop="if_binary"),
+                    ),
                 ]
             )
 
             preprocessor = ColumnTransformer(
-                [
-                    ("num_pipeline", num_pipeline, numeric_features),
-                    ("cat_pipeline", cat_pipeline, categorical_features),
-                ]
+                transformers=[
+                    ("onehot_scaled", cat_one_pipeline, categorical_features_one),
+                    ("ordinal_scaled", cat_lb_pipeline, categorical_features_lb),
+                    ("numeric_scaled", num_pipeline, numeric_features),
+                ],
+                remainder="drop",
             )
 
             return preprocessor
@@ -96,23 +102,27 @@ class DataTransformation:
 
             preprocessing_obj = self.get_data_transformation_obj()
 
-            target_column_name = "price"  # y
-            drop_columns = [target_column_name, "id"]  # x
+            target_column_name = "price_in_euro"  # y
+            drop_columns = [target_column_name]  # x
 
             # TRAIN
+
             input_feature_train_df = train_df.drop(
                 columns=drop_columns, axis=1
             )  # xtrain
             target_feature_train_df = train_df[target_column_name]  # ytrain
 
             # TEST
+
             input_feature_test_df = test_df.drop(columns=drop_columns, axis=1)  # xtest
             target_feature_test_df = test_df[target_column_name]  # ytest
 
             # X DATA
+
             input_feature_train_arr = preprocessing_obj.fit_transform(
                 input_feature_train_df
             )  # Xtrain
+
             input_feature_test_arr = preprocessing_obj.transform(
                 input_feature_test_df
             )  # Xtest
@@ -127,7 +137,7 @@ class DataTransformation:
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
             save_object(
-                file_path=self.data_transformation_config.preprocessor_obj_file_path,
+                file_path=self.data_transformation_config.preprocessing_obj_file_path,
                 obj=preprocessing_obj,
             )
             logging.info("Preprocessor pickle file saved")
@@ -135,7 +145,7 @@ class DataTransformation:
             return (
                 train_arr,
                 test_arr,
-                self.data_transformation_config.preprocessor_obj_file_path,
+                self.data_transformation_config.preprocessing_obj_file_path,
             )
 
         except Exception as e:

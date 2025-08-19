@@ -6,6 +6,9 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
+
 
 @dataclass
 class DataIngestionconfig:
@@ -21,7 +24,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Data Ingestion methods Starts")
         try:
-            df = pd.read_csv(os.path.join("notebooks/data", "gemstone.csv"))
+            df = pd.read_csv(os.path.join("notebooks/data", "Cleaned_car_data.csv"))
             logging.info("Dataset read as pandas Dataframe")
 
             os.makedirs(
@@ -50,3 +53,23 @@ class DataIngestion:
         except Exception as e:
             logging.info("Exception occured at Data Ingestion stage")
             raise CustomException(e, sys)
+
+
+if __name__ == "__main__":
+    obj = DataIngestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    data_transformation = DataTransformation()
+    train_arr, test_arr, _ = data_transformation.initaite_data_transformation(
+        train_data, test_data
+    )
+
+    model_train = ModelTrainer()
+    model_train.initiate_model_training(train_arr, test_arr)
+    # python src/components/data_injestion.py
+#python src/pipeline/train_pipeline.py 
+
+#python src/pipeline/prediction_pipeline.py 
+
+
+

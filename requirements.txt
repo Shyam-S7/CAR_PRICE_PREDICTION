@@ -7,4 +7,6 @@ lightgbm
 xgboost
 FastApi
 uvicorn
+jinja2
+Flask
 -e .

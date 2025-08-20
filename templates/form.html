@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Car Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{url_for('static',filename='form.jpg')}}");
+            background-size: cover;
+            background-position: center;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        input[type="submit"] {
+            background: #007BFF;
+            color: white;
+            font-weight: bold;
+            border: none;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+    </style>
+    <script>
+        function updateModels() {
+            let brand = document.getElementById("brand").value;
+            let models = {{ models_dict | tojson
+        }};
+        let modelSelect = document.getElementById("model_name");
+        modelSelect.innerHTML = "";
+        for (let i = 0; i < models[brand].length; i++) {
+            let opt = document.createElement("option");
+            opt.value = models[brand][i];
+            opt.innerHTML = models[brand][i];
+            modelSelect.appendChild(opt);
+        }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Car Price Prediction</h1>
+        <form action="/predict" method="post">
+
+            <label for="brand">Brand:</label>
+            <select name="brand" id="brand" onchange="updateModels()">
+                {% for b in brands %}
+                <option value="{{ b }}">{{ b }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="model_name">Model:</label>
+            <select name="model_name" id="model_name">
+                {% for m in models_dict[brands[0]] %}
+                <option value="{{ m }}">{{ m }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="color">Color:</label>
+            <select name="color">
+                {% for c in colors %}
+                <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="year">Year:</label>
+            <select name="year">
+                {% for y in years %}
+                <option value="{{ y }}">{{ y }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="power_kw">Power KW:</label>
+            <input type="number" name="power_kw" min="20" max="500" step="0.01" required>
+
+            <label for="power_ps">Power PS:</label>
+            <input type="number" name="power_ps" min="20" max="500" step="0.01" required>
+
+            <label for="transmission">Transmission:</label>
+            <select name="transmission">
+                {% for t in transmissions %}
+                <option value="{{ t }}">{{ t }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="fuel_type">Fuel Type:</label>
+            <select name="fuel_type">
+                {% for f in fuel_types %}
+                <option value="{{ f }}">{{ f }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="fuel_100km">Fuel per 100 km (L):</label>
+            <input type="number" name="fuel_100km" min="2" max="25" step="0.01" required>
+
+            <label for="fuel_g_km">Fuel g/km:</label>
+            <input type="number" name="fuel_g_km" min="50" max="500" step="0.01" required>
+
+            <label for="mileage">Mileage (km):</label>
+            <input type="number" name="mileage" min="500" max="50000" step="0.01" required>
+
+            <input type="submit" value="Predict">
+        </form>
+    </div>
+</body>
+
+</html>

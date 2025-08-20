@@ -59,17 +59,21 @@
     <script>
         function updateModels() {
             let brand = document.getElementById("brand").value;
-            let models = {{ models_dict | tojson
+            let models = {{ models_dict | tojson | safe
         }};
+
         let modelSelect = document.getElementById("model_name");
         modelSelect.innerHTML = "";
+
         for (let i = 0; i < models[brand].length; i++) {
             let opt = document.createElement("option");
             opt.value = models[brand][i];
             opt.innerHTML = models[brand][i];
             modelSelect.appendChild(opt);
         }
-        }
+}
+
+
     </script>
 </head>
 

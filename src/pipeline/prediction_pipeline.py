@@ -4,6 +4,7 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import load_object
 import pandas as pd
+import numpy as np
 
 
 class PredictPipeline:
@@ -23,8 +24,10 @@ class PredictPipeline:
             data_scaled = preprocessor.transform(features)
 
             # pred on scaled data
-            pred = model.predict(data_scaled)
-
+            pred_log = model.predict(data_scaled)
+ 
+            pred=np.expm1(pred_log)
+            
             # final prediction it should be send app.py
             return pred
 

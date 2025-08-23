@@ -21,16 +21,10 @@ if __name__ == "__main__":
     model_trainer.initiate_model_training(train_arr, test_arr)
 
 
+"""       
+python src\pipeline\train_pipeline.py
+python src\pipeline\prediction_pipeline.py         
+python app.py
+conda activate D:\PROJECTS\ML\Car_price\venv
 
-
-
-#         python src\pipeline\train_pipeline.py
-#         python src\pipeline\prediction_pipeline.py         
-#         python app.py
-#         conda activate D:\PROJECTS\ML\Car_price\venv
-
-
-
-
-
-
+"""

@@ -24,7 +24,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Data Ingestion methods Starts")
         try:
-            df = pd.read_csv(os.path.join("notebooks/data", "Cleaned_car_data.csv"))
+            df = pd.read_csv(os.path.join("notebooks/data", "last.csv"))
             logging.info("Dataset read as pandas Dataframe")
 
             os.makedirs(
@@ -55,7 +55,7 @@ class DataIngestion:
             raise CustomException(e, sys)
 
 
-'''if __name__ == "__main__":
+"""if __name__ == "__main__":
     obj = DataIngestion()
     train_data, test_data = obj.initiate_data_ingestion()
 
@@ -71,5 +71,4 @@ class DataIngestion:
 
 #python src/pipeline/prediction_pipeline.py 
 
-'''
-
+"""

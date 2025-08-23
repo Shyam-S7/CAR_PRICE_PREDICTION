@@ -11,6 +11,7 @@ from sklearn.preprocessing import (
     OneHotEncoder,
     OrdinalEncoder,
     StandardScaler,
+    RobustScaler,
 )
 
 from sklearn.impute import SimpleImputer
@@ -46,7 +47,7 @@ class DataTransformation:
             num_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="median")),
-                    ("scaler", StandardScaler()),
+                    ("scaler", RobustScaler()),
                 ]
             )
 
@@ -59,7 +60,7 @@ class DataTransformation:
                             handle_unknown="use_encoded_value", unknown_value=-1
                         ),
                     ),
-                    ("scaler", StandardScaler()),
+                    ("scaler", RobustScaler()),
                 ]
             )
             cat_one_pipeline = Pipeline(
@@ -110,12 +111,12 @@ class DataTransformation:
             input_feature_train_df = train_df.drop(
                 columns=drop_columns, axis=1
             )  # xtrain
-            target_feature_train_df = train_df[target_column_name]  # ytrain
+            target_feature_train_df = np.log1p(train_df[target_column_name])  # ytrain
 
             # TEST
 
             input_feature_test_df = test_df.drop(columns=drop_columns, axis=1)  # xtest
-            target_feature_test_df = test_df[target_column_name]  # ytest
+            target_feature_test_df = np.log1p(test_df[target_column_name])  # ytest
 
             # X DATA
 
@@ -141,6 +142,7 @@ class DataTransformation:
                 obj=preprocessing_obj,
             )
             logging.info("Preprocessor pickle file saved")
+            logging.info("Data Transformation Completed")
 
             return (
                 train_arr,

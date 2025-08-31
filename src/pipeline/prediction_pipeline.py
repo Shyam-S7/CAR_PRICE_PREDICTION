@@ -45,7 +45,6 @@ class CustomData:
         model: str,
         color: str,
         year: int,
-        power_kw: float,
         power_ps: float,
         transmission_type: str,
         fuel_type: str,
@@ -58,7 +57,6 @@ class CustomData:
         self.model = model
         self.color = color
         self.year = year
-        self.power_kw = power_kw
         self.power_ps = power_ps
         self.transmission_type = transmission_type
         self.fuel_type = fuel_type
@@ -74,7 +72,6 @@ class CustomData:
                 "model": [self.model],
                 "color": [self.color],
                 "year": [self.year],
-                "power_kw": [self.power_kw],
                 "power_ps": [self.power_ps],
                 "transmission_type": [self.transmission_type],
                 "fuel_type": [self.fuel_type],

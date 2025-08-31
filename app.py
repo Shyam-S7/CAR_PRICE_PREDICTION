@@ -152,7 +152,6 @@ def predict_datapoint():
         model=request.form.get("model_name"),
         color=request.form.get("color"),
         year=int(request.form.get("year")),
-        power_kw=float(request.form.get("power_kw")),
         power_ps=float(request.form.get("power_ps")),
         transmission_type=request.form.get("transmission"),
         fuel_type=request.form.get("fuel_type"),

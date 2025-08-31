@@ -22,9 +22,9 @@ if __name__ == "__main__":
 
 
 """       
-python src\pipeline\train_pipeline.py
+python src\pipeline\train_pipeline.py  
 python src\pipeline\prediction_pipeline.py         
 python app.py
 conda activate D:\PROJECTS\ML\Car_price\venv
-
+ctrl+c for stop app
 """

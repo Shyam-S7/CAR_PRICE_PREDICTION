@@ -3,17 +3,23 @@ import sys
 from dataclasses import dataclass
 
 import pandas as pd
-import numpy as np 
+import numpy as np
 
 
 import os
+
 os.environ["LIGHTGBM_VERBOSE"] = "-1"
 
 
-from sklearn.linear_model import LinearRegression,Ridge 
+from sklearn.linear_model import LinearRegression, Ridge
 
 
-from sklearn.ensemble import VotingRegressor, StackingRegressor, RandomForestRegressor, GradientBoostingRegressor
+from sklearn.ensemble import (
+    VotingRegressor,
+    StackingRegressor,
+    RandomForestRegressor,
+    GradientBoostingRegressor,
+)
 
 from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
@@ -51,21 +57,19 @@ class ModelTrainer:
                 ("cat", CatBoostRegressor(verbose=False)),
                 ("lgbm", LGBMRegressor()),
             ]
-            
-            
+
             logging.info("Model building started")
-            
+
             models = {
-                "Ridge":Ridge(alpha=1),
-                
+                "Ridge": Ridge(alpha=1),
                 "Random Forest Regressor": RandomForestRegressor(
                     max_depth=10,
                     min_samples_leaf=2,
                     min_samples_split=5,
                     n_estimators=500,
                     random_state=42,
-                    max_features='sqrt',
-                    n_jobs=-1
+                    max_features="sqrt",
+                    n_jobs=-1,
                 ),
                 "GradientBoostingRegressor": GradientBoostingRegressor(
                     n_estimators=500, max_depth=5, learning_rate=0.05
@@ -80,7 +84,7 @@ class ModelTrainer:
                     random_state=42,
                     n_jobs=-1,
                     min_child_weight=1,
-                    verbosity=0
+                    verbosity=0,
                 ),
                 "CatBoosting Regressor": CatBoostRegressor(
                     depth=6,
@@ -88,7 +92,7 @@ class ModelTrainer:
                     l2_leaf_reg=3,
                     learning_rate=0.1,
                     verbose=0,
-                
+                    allow_writing_files=False,
                 ),
                 "LGBMRegressor": LGBMRegressor(
                     learning_rate=0.1,
@@ -100,17 +104,16 @@ class ModelTrainer:
                     reg_lambda=1.0,
                     n_jobs=-1,
                     min_child_weight=5,
-                    
-                    verbose = -1,
-                    
-                    
+                    verbose=-1,
                 ),
                 "StackingRegressor": StackingRegressor(
-                   estimators=estimators, final_estimator=Ridge(alpha=1.0)
-                 ),
+                    estimators=estimators, final_estimator=Ridge(alpha=1.0)
+                ),
             }
 
-            model_report = evaluvate_model(x_train, y_train, x_test, y_test, models)
+            model_report = evaluvate_model(
+                x_train, y_train, x_test, y_test, models=models
+            )
 
             print(model_report)
             print("\n=================================")
@@ -143,7 +146,6 @@ class ModelTrainer:
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model,
             )
-               
 
         except Exception as e:
             logging.info("Exception occured at Model taining")

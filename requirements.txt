@@ -5,8 +5,5 @@ seaborn
 catboost
 lightgbm
 xgboost
-FastApi
-uvicorn
-jinja2
-Flask
+flask
 -e .

@@ -2,44 +2,59 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Price Prediction</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url("{{url_for('static',filename='index.jpg')}}");
-            background-size: cover;
-            background-position: center;
-            padding: 40px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Price Prediction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("{{url_for('static',filename='index.jpg')}}");
+      background-size: cover;       /* image covers screen */
+      background-repeat: no-repeat; /* no repeat */
+      background-attachment: fixed; /* stays fixed on scroll */
+      background-position: center;  /* center image */
+      margin: 0;                    /* remove default gap */
+      padding: 40px;                /* keep your text/button spacing */
+    }
 
+    h1 {
+      color: white;
+    }
 
-        h1 {
-            color: white;
-        }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
+      text-decoration: none;
+      background: #007BFF;
+      color: white;
+      border-radius: 8px;
+    }
 
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 24px;
-            font-size: 18px;
-            text-decoration: none;
-            background: #007BFF;
-            color: white;
-            border-radius: 8px;
-        }
+    a:hover {
+      background: #0056b3;
+    }
+   footer {
+    color: white;
+    position: fixed;   /* fixed on screen */
+    left: 0;           /* left corner */
+    bottom: 0;         /* bottom of screen */
+    margin: 10px;      /* small spacing from edges */
+    font-size: 16px;
+}
 
-        a:hover {
-            background: #007BFF;
-        }
-    </style>
+  </style>
 </head>
 
 <body>
-    <h1>Welcome to Car Price Prediction </h1>
+  <h1>Welcome to Car Price Prediction</h1>
+  <a href="/form">Go to Prediction Form</a> 
 
-    <a href="/form">Go to Prediction Form</a>
+  <footer>
+    © 2025 Developed by <b>Shyam</b>
+  </footer>
+  
 </body>
 
 </html>

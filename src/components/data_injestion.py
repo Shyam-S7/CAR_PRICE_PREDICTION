@@ -32,9 +32,11 @@ class DataIngestion:
             )
             df.to_csv(self.ingestion_config.raw_data_path, index=False)
 
+            df = df.drop_duplicates()
+
             logging.info("Train test split")
 
-            train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
+            train_set, test_set = train_test_split(df, test_size=0.25, random_state=42)
 
             train_set.to_csv(
                 self.ingestion_config.train_data_path, index=False, header=True
@@ -44,6 +46,12 @@ class DataIngestion:
             )
 
             logging.info("Ingestion of Data is completed")
+
+            train = pd.read_csv("artifacts/train.csv")
+            test = pd.read_csv("artifacts/test.csv")
+
+            overlap = pd.merge(train, test, how="inner")
+            logging.info(f"Duplicates across train & test: {len(overlap)}")
 
             return (
                 self.ingestion_config.train_data_path,
@@ -55,10 +63,12 @@ class DataIngestion:
             raise CustomException(e, sys)
 
 
-"""if __name__ == "__main__":
+"""
+if __name__ == "__main__":
     obj = DataIngestion()
-    train_data, test_data = obj.initiate_data_ingestion()
+    train_data, test_data =obj.initiate_data_ingestion()
 
+    
     data_transformation = DataTransformation()
     train_arr, test_arr, _ = data_transformation.initaite_data_transformation(
         train_data, test_data

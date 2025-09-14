@@ -38,7 +38,6 @@ class DataTransformation:
             categorical_features_one = ["transmission_type"]
             numeric_features = [
                 "mileage_in_km",
-            
                 "power_ps",
                 "fuel_consumption_l_100km",
                 "fuel_consumption_g_km",
@@ -127,11 +126,7 @@ class DataTransformation:
             input_feature_test_arr = preprocessing_obj.transform(
                 input_feature_test_df
             )  # Xtest
-            
-            
 
-        
-            
             logging.info(
                 "Applying preprocessing object on training and testing datasets."
             )

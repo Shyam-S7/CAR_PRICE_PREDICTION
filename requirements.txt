@@ -1,9 +1,2 @@
-pandas
-numpy
-scikit-learn
-seaborn
-catboost
-lightgbm
-xgboost
-flask
+
 -e .

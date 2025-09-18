@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ml_project"
+version = "0.0.1"
+description = "Car price prediction ML project"
+authors = [
+    { name = "S Shyam", email = "shyamshyam7@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+
+# Dependencies that were in requirements.txt
+dependencies = [
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "catboost",
+    
+
+    "seaborn",
+    "matplotlib",
+
+     "lightgbm",
+     "xgboost",
+     "flask",
+
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "jupyter"
+]
+
+
+
+[tool.setuptools.packages.find]
+where = ["."]

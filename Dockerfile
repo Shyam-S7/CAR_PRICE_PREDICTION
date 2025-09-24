@@ -1,0 +1,29 @@
+# Base image
+FROM python:3.8-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies (needed for some ML libraries)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the entire project first (required for -e .)
+COPY . .
+
+# Upgrade pip and install dependencies in editable mode
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Set environment variables
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=production
+ENV PYTHONUNBUFFERED=1
+
+# Expose Flask port
+EXPOSE 5000
+
+# Start Flask app using Gunicorn (production-ready)
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

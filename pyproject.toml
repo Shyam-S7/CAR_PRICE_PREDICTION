@@ -18,15 +18,12 @@ dependencies = [
     "numpy",
     "scikit-learn",
     "catboost",
-    
-
     "seaborn",
     "matplotlib",
-
-     "lightgbm",
-     "xgboost",
-     "flask",
-
+    "lightgbm",
+    "xgboost",
+    "flask",
+    "gunicorn"
 ]
 
 [project.optional-dependencies]

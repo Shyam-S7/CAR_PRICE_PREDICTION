@@ -1,6 +1,6 @@
 # 🚗 Car Price Prediction – End-to-End Machine Learning Project
 
-##   /span>  Overview
+##   Overview
 
 This project predicts the selling price of German used cars using machine learning. It is built as a complete end-to-end pipeline, covering data cleaning, preprocessing, model training, evaluation, and deployment.
 
@@ -31,8 +31,8 @@ The dataset contains detailed information about German used cars, including tech
 | Power PS               | Engine power in horsepower                       |
 | Transmission Type      | Manual / Automatic                               |
 | Fuel Type              | Petrol, Diesel, Electric, etc.                   |
-| Fuel Consumption (L/100km) | Fuel use in liters per 100 km                    |
-| Fuel Consumption (g/km) | CO₂ emissions                                    |
+| Fuel Consumption (L/100km) | Fuel use in liters per 100 km                |
+| Fuel Consumption (g/km) | CO₂ emissions                                   |
 | Mileage in km          | Distance traveled                                |
 | Offer Description      | Extra info about the car listing                 |
 
@@ -45,40 +45,42 @@ The dataset contains detailed information about German used cars, including tech
 ## 📁 Project Structure
 
 
-Car_Price_Prediction/
-│── data/                  # Dataset (gitignored)
-│── notebooks/             # Jupyter notebooks (EDA, experiments)
-│── src/                   # Source code
-│   │── components/        # Modular scripts
-│       │── data_ingestion.py
-│       │── data_transformation.py
-│       │── model_trainer.py
-│   │── pipeline/
-│       │── train_pipeline.py
-│       │── pred.py        # Prediction script
-│── artifacts/             # Trained models, scalers, encoders (gitignored)
-│── app.py                 # Flask app for deployment
-│── requirements.txt       # Dependencies
-│── Dockerfile             # Docker setup
-│── .gitignore             # Git ignore file
-│── README.md              # Project documentation
-│── pyproject.toml         # Optional project config
-│── templates/             # Flask HTML templates
-│── static/                # CSS, JS, images for Flask
+| Folder / File                           | Description                                    |
+| --------------------------------------- | ---------------------------------------------- |
+| `data/`                                 | Dataset (gitignored)                           |
+| `notebooks/`                            | Jupyter notebooks (EDA, experiments)           |
+| `src/`                                  | Source code                                    |
+| `src/components/`                       | Modular scripts                                |
+| `src/components/data_ingestion.py`      | Script for data ingestion                      |
+| `src/components/data_transformation.py` | Script for data preprocessing & transformation |
+| `src/components/model_trainer.py`       | Script to train ML models                      |
+| `src/pipeline/`                         | Pipeline scripts                               |
+| `src/pipeline/train_pipeline.py`        | Main training pipeline                         |
+| `src/pipeline/pred.py`                  | Script for making predictions                  |
+| `artifacts/`                            | Trained models, scalers, encoders (gitignored) |
+| `app.py`                                | Flask app for deployment                       |
+| `requirements.txt`                      | Python dependencies                            |
+| `Dockerfile`                            | Docker setup                                   |
+| `.gitignore`                            | Git ignore file                                |
+| `README.md`                             | Project documentation                          |
+| `pyproject.toml`                        | Optional project config                        |
+| `templates/`                            | Flask HTML templates                           |
+| `static/`                               | images for Flask                      |
+
 
 ## ⚙️ Setup & Installation
-## 1️⃣ Clone the Repository
+# 1️⃣ Clone the Repository
 - git clone https://github.com/your-username/car-price-prediction.git
 - cd car-price-prediction
 
-## 2️⃣ Create Conda Environment (Python 3.8)
+# 2️⃣ Create Conda Environment (Python 3.8)
 - conda create -n car_price python=3.8 -y
 - conda activate car_price
 
-## 3️⃣ Install Dependencies
+# 3️⃣ Install Dependencies
 pip install -r requirements.txt
 
-## 4️⃣ Run Locally
+# 4️⃣ Run Locally
 
 Train the model:
 
@@ -92,21 +94,21 @@ python app.py
 
 Open in browser: http://127.0.0.1:5000/
 
-## 🐳 Docker Deployment
+# 🐳 Docker Deployment
 
-## Build Docker Image:
+# Build Docker Image:
 
 docker build -t car-price-prediction .
 
 
-## Run Docker Container:
+# Run Docker Container:
 
 - docker run -p 5000:5000 car-price-prediction
 
 
 - Open browser: http://127.0.0.1:5000/
 
-## Check running containers:
+# Check running containers:
 
 docker ps
 

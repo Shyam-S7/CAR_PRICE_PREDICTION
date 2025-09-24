@@ -69,18 +69,18 @@ The dataset contains detailed information about German used cars, including tech
 
 
 ## ⚙️ Setup & Installation
-# 1️⃣ Clone the Repository
+# 1️ Clone the Repository
 - git clone https://github.com/your-username/car-price-prediction.git
 - cd car-price-prediction
 
-# 2️⃣ Create Conda Environment (Python 3.8)
+# 2️ Create Conda Environment (Python 3.8)
 - conda create -n car_price python=3.8 -y
 - conda activate car_price
 
-# 3️⃣ Install Dependencies
+# 3️ Install Dependencies
 pip install -r requirements.txt
 
-# 4️⃣ Run Locally
+# 4️ Run Locally
 
 Train the model:
 
